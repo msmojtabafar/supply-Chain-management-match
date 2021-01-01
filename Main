@@ -1,0 +1,47 @@
+            string[] mainArgs = Console.ReadLine().Split(' ');
+            string[] objectSizeArray = Console.ReadLine().Split(' ');
+
+            int numberOfObjects = int.Parse(mainArgs[0]);
+            int numberOfBoxes = int.Parse(mainArgs[1]);
+            int boxSize = int.Parse(mainArgs[2]);
+
+            int answer = 0;
+            bool allObjectsCanBeInBoxes = true;
+            int usedSpaceOfCurrentBox = 0;
+            int indexOfCurrentBox = 0;
+
+            for (int i = numberOfObjects - 1; i >= 0; i--)
+            {
+                int currentObjectSize = int.Parse(objectSizeArray[i]);
+                if ((currentObjectSize > boxSize) || (indexOfCurrentBox + 1 > numberOfBoxes))
+                {
+                    answer = numberOfObjects - i - 1;
+                    allObjectsCanBeInBoxes = false;
+                    break;
+                }
+                else
+                {
+                    if ((usedSpaceOfCurrentBox + currentObjectSize) <= boxSize)
+                        usedSpaceOfCurrentBox += currentObjectSize;
+                    else
+                    {
+                        if ((indexOfCurrentBox + 2) <= numberOfBoxes)
+                        {
+                            indexOfCurrentBox++;
+                            usedSpaceOfCurrentBox = currentObjectSize;
+                        }
+                        else
+                        {
+                            answer = numberOfObjects - i - 1;
+                            allObjectsCanBeInBoxes = false;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (allObjectsCanBeInBoxes)
+                answer = numberOfObjects;
+
+            Console.WriteLine(answer);
+            Console.ReadKey();
