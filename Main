@@ -1,4 +1,4 @@
-         using System;
+        using System;
 
 namespace NanoSoft
 {
@@ -8,8 +8,6 @@ namespace NanoSoft
         {
             while (true)
             {
-
-
                 string[] mainArgs = Console.ReadLine().Split(' ');
                 string[] objectSizeArray = Console.ReadLine().Split(' ');
 
@@ -20,26 +18,26 @@ namespace NanoSoft
                 int answer = 0;
                 bool allObjectsCanBeInBoxes = true;
                 int usedSpaceOfCurrentBox = 0;
-                int indexOfCurrentBox = 0;
+                int fulledBoxesCount = 0;
 
-                for (int i = numberOfObjects - 1; i >= 0; i--)
+                for (int i = numberOfObjects - 1; i >= 0; i--) // check objects from last object to first, to findout every object can be in boxes or not
                 {
                     int currentObjectSize = int.Parse(objectSizeArray[i]);
-                    if ((currentObjectSize > boxSize) || (indexOfCurrentBox + 1 > numberOfBoxes))
+                    if ((currentObjectSize > boxSize) || (fulledBoxesCount >= numberOfBoxes)) // if we don't have any empty box or current object size is bigger than boxes size
                     {
                         answer = numberOfObjects - i - 1;
                         allObjectsCanBeInBoxes = false;
                         break;
                     }
-                    else
+                    else // we need to insert current object in current box or a new box
                     {
-                        if ((usedSpaceOfCurrentBox + currentObjectSize) <= boxSize)
+                        if ((usedSpaceOfCurrentBox + currentObjectSize) <= boxSize) // if current box has enough free space
                             usedSpaceOfCurrentBox += currentObjectSize;
-                        else
+                        else // we need to insert current object in a new box
                         {
-                            if ((indexOfCurrentBox + 2) <= numberOfBoxes)
+                            if ((fulledBoxesCount + 1) < numberOfBoxes) // if we have free box yet
                             {
-                                indexOfCurrentBox++;
+                                fulledBoxesCount ++;
                                 usedSpaceOfCurrentBox = currentObjectSize;
                             }
                             else
@@ -60,3 +58,4 @@ namespace NanoSoft
         }
     }
 }
+
